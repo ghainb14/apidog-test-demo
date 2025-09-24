@@ -8,6 +8,7 @@ on:
 jobs:
   apitest:
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -16,11 +17,11 @@ jobs:
         run: npm install -g apidog-cli
 
       - name: Run Apidog Tests
-        run: apidog run --project-id=YOUR_PROJECT_ID --token=YOUR_API_TOKEN
+        run: apidog run --project-id=1075390 --token=${{ secrets.APIDOG_KEY }}
 
       - name: Slack Notification on Failure
         if: failure()
         run: |
           curl -X POST -H 'Content-type: application/json' \
-          --data '{"text":"🚨 Apidog 테스트 실패! 확인해주세요.\n🔗 프로젝트: https://apidog.com/project/YOUR_PROJECT_ID"}' \
-          https://hooks.slack.com/services/YOUR_SLACK_WEBHOOK_URL
+          --data '{"text":"🚨 Apidog 테스트 실패! 확인해주세요.\n🔗 프로젝트: https://apidog.com/project/1075390"}' \
+          ${{ secrets.SLACK_WEBHOOK_URL }}
