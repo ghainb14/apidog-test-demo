@@ -12,11 +12,21 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Install Apidog CLI
-        run: npm install -g apidog-cli
+      - name: Install Apidog CLI if not exists
+        run: |
+          if ! command -v apidog &> /dev/null
+          then
+            echo "Apidog CLI not found. Installing..."
+            npm install -g apidog-cli@latest
+          else
+            echo "Apidog CLI already installed. Skipping install."
+          fi
 
       - name: Run Apidog Tests
-        run: apidog run --access-token=${{ secrets.APIDOG_KEY }} --project-id 1075390 -t 1447647
+        run: apidog run \
+          --access-token=${{ secrets.APIDOG_KEY }} \
+          --project-id 1075390 \
+          -t 1447647
 
       - name: Slack Notification on Failure
         if: failure()
