@@ -1,3 +1,10 @@
+name: Apidog Test & Slack Alert
+
+on:
+  push:
+    branches:
+      - main
+
 jobs:
   apitest:
     runs-on: ubuntu-latest
@@ -24,4 +31,3 @@ jobs:
           curl -X POST -H 'Content-type: application/json' \
           --data '{"text":"✅ Apidog 테스트 성공! 🎉\n🔗 프로젝트: https://apidog.com/project/1075390"}' \
           ${{ secrets.SLACK_WEBHOOK_URL }}
-
