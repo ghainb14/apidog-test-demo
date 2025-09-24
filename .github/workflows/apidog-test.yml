@@ -32,21 +32,18 @@ jobs:
           fi
 
       - name: Run Apidog Tests
-        run: apidog run 
-          --access-token=${{ secrets.APIDOG_KEY }} 
-          --project-id 1075390 
-          -t 1447647
+        run: apidog run 1447647 --access-token=${{ secrets.APIDOG_KEY }}
 
       - name: Slack Notification on Failure
         if: failure()
         run: |
-          curl -X POST -H 'Content-type: application/json' 
-          --data '{"text":"🚨 Apidog 테스트 실패! 확인해주세요.\n🔗 프로젝트: https://apidog.com/project/1075390"}' 
+          curl -X POST -H 'Content-type: application/json' \
+          --data '{"text":"🚨 Apidog 테스트 실패! 확인해주세요.\n🔗 프로젝트: https://apidog.com/project/1075390"}' \
           ${{ secrets.SLACK_WEBHOOK_URL }}
 
       - name: Slack Notification on Success
         if: success()
         run: |
           curl -X POST -H 'Content-type: application/json' \
-          --data '{"text":"✅ Apidog 테스트 성공! 🎉\n🔗 프로젝트: https://apidog.com/project/1075390"}' 
+          --data '{"text":"✅ Apidog 테스트 성공! 🎉\n🔗 프로젝트: https://apidog.com/project/1075390"}' \
           ${{ secrets.SLACK_WEBHOOK_URL }}
