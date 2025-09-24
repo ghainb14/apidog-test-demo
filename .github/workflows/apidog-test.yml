@@ -16,7 +16,7 @@ jobs:
         run: npm install -g apidog-cli
 
       - name: Run Apidog Tests
-        run: apidog run --access-token=${{ secrets.APIDOG_KEY }} 
+        run: apidog run --access-token=${{ secrets.APIDOG_KEY }} -t 1447647
 
       - name: Slack Notification on Failure
         if: failure()
