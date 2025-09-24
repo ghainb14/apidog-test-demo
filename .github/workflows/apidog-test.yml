@@ -12,12 +12,21 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
+      # npm 전역 캐시 설정
+      - name: Cache npm global packages
+        uses: actions/cache@v3
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-npm-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-npm-
+
       - name: Install Apidog CLI if not exists
         run: |
           if ! command -v apidog &> /dev/null
           then
             echo "Apidog CLI not found. Installing..."
-            npm install -g apidog-cli@latest
+            npm install -g apidog-cli@latest --loglevel=error
           else
             echo "Apidog CLI already installed. Skipping install."
           fi
