@@ -1,14 +1,6 @@
-name: Apidog Test & Slack Alert
-
-on:
-  push:
-    branches:
-      - main
-
 jobs:
   apitest:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -25,3 +17,11 @@ jobs:
           curl -X POST -H 'Content-type: application/json' \
           --data '{"text":"🚨 Apidog 테스트 실패! 확인해주세요.\n🔗 프로젝트: https://apidog.com/project/1075390"}' \
           ${{ secrets.SLACK_WEBHOOK_URL }}
+
+      - name: Slack Notification on Success
+        if: success()
+        run: |
+          curl -X POST -H 'Content-type: application/json' \
+          --data '{"text":"✅ Apidog 테스트 성공! 🎉\n🔗 프로젝트: https://apidog.com/project/1075390"}' \
+          ${{ secrets.SLACK_WEBHOOK_URL }}
+
