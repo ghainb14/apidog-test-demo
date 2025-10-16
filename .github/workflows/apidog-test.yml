@@ -45,5 +45,5 @@ jobs:
         if: success()
         run: |
           curl -X POST -H 'Content-type: application/json' \
-          --data '{"text":"✅ Apidog 테스트 성공! 🎉\n🔗 프로젝트: https://apidog.com/project/1075390"}' \
+          --data '{"text":"✅ Apidog 테스트 성공! 🎉\n🔗 프로젝트: https://mock.apidog.com/m1/1075390-1063972-default/gettest?idx=1"}' \
           ${{ secrets.SLACK_WEBHOOK_URL }}
